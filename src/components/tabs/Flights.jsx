@@ -1,7 +1,8 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import { useBrand } from '../../context/BrandContext'
-import { Plane, MapPin, Briefcase, AlertCircle, Loader2, ExternalLink, Search, X, Zap, RefreshCw, ChevronDown, ChevronUp } from 'lucide-react'
+import { Plane, MapPin, Briefcase, AlertCircle, Loader2, ExternalLink, Search, X, Zap, RefreshCw, ChevronDown, ChevronUp, CalendarClock } from 'lucide-react'
 import CarrierFeedbackModal from '../CarrierFeedbackModal'
+import ScheduleDeliveryModal from '../ScheduleDeliveryModal'
 
 const AIRPORT_FILTER_ID = 'lG4Gn7nz'
 const CARRIER_FILTER_ID = 'v6fXfL0c'
@@ -152,6 +153,8 @@ export default function Flights({ darkMode = false }) {
   // Carrier whose feedback modal is open (null = closed). Opened when Omni
   // emits a carrier-click embed event from inside the dashboard iframe.
   const [feedbackCarrier, setFeedbackCarrier] = useState(null)
+  // Schedule-delivery modal (schedule + format options only; no filter UI).
+  const [scheduleOpen, setScheduleOpen] = useState(false)
   const iframeRef = useRef(null)         // postMessage iframe
   const iframeUrlRef = useRef(null)      // URL-method iframe
   const embedOriginRef = useRef(null)
@@ -499,6 +502,16 @@ export default function Flights({ darkMode = false }) {
   return (
     <div className="flights-tab">
       <div className="flights-filter-panel">
+        <button
+          type="button"
+          className="flights-schedule-btn"
+          style={{ background: brand.primaryColor }}
+          onClick={() => setScheduleOpen(true)}
+          title="Schedule a recurring email delivery of this dashboard"
+        >
+          <CalendarClock size={15} /> Schedule delivery
+        </button>
+
         <div className="flights-filter-section">
           <div className="flights-filter-header">
             <span className="flights-filter-label">
@@ -660,6 +673,15 @@ export default function Flights({ darkMode = false }) {
           brand={brand}
           userEmail={currentUser?.email}
           onClose={() => setFeedbackCarrier(null)}
+        />
+      )}
+
+      {scheduleOpen && (
+        <ScheduleDeliveryModal
+          brand={brand}
+          dashboardName={`${brand.name ? brand.name + ' ' : ''}Flight Delay Dashboard`}
+          userEmail={currentUser?.email}
+          onClose={() => setScheduleOpen(false)}
         />
       )}
     </div>
