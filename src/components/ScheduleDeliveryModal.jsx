@@ -94,8 +94,10 @@ export default function ScheduleDeliveryModal({
     if (!canSubmit) return
     setSubmitting(true)
     // Static demo build (GitHub Pages): there is no backend to call Omni's
-    // Schedules API, so we simulate a successful submission. The live
-    // fishtankbubble app performs the real POST /api/v1/schedules server-side.
+    // Schedules API, so we simulate a successful submission. See
+    // api/omni-create-schedule.js for the server-side call this would make if
+    // bubble-app were hosted on a platform with serverless functions (e.g.
+    // Vercel) — swap this simulation for a POST to /api/omni-create-schedule.
     const schedule = buildCron({ frequency, time, weekday, monthday })
     // eslint-disable-next-line no-console
     console.log('[ScheduleDelivery] (demo — no backend) would create:', { schedule, timezone, format, email: email.trim() })

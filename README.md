@@ -19,6 +19,12 @@ on a server are handled in the browser:
   fulfils `/api/omni-embed-url` (local signing) and `/api/omni-query-distinct`
   (pre-baked filter values in `src/utils/distinctValues.js`) in the browser.
 - **Brand config** — the SEATAC defaults live in `src/context/BrandContext.jsx`.
+- **Schedule delivery (Flights tab)** — the "Schedule delivery" button opens a
+  modal with schedule + format options. On this static build the submit is
+  simulated (no backend). `api/omni-create-schedule.js` is included as a
+  **reference** for the real server-side call (Omni Schedules API) — it runs only
+  if bubble-app is hosted on a platform with serverless functions (e.g. Vercel),
+  not on GitHub Pages.
 
 > **Security note:** because there is no server, the Omni embed secret and API
 > key are bundled into the client. This is acceptable here only because they are
