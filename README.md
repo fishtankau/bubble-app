@@ -59,6 +59,20 @@ parameters). If anyone edits `group_level_id`, the `entity`, a user attribute, o
 *any* signed parameter in the browser, the signature no longer matches — and
 **Omni rejects the session.** The URL simply can't be tampered with.
 
+Here, **`group_level_id` is just an example of an _access-filter user attribute_** —
+a value you pass in the signed payload that Omni uses for **role-based access
+control (RBAC)**. An [access filter](https://docs.omni.co/modeling/topics/parameters/access-filters)
+maps that [user attribute](https://docs.omni.co/administration/users/attributes)
+to a field and injects it into the `WHERE` clause of every query, so each embedded
+user only sees the **rows their attribute permits** (e.g. `group_level_id`,
+`region`, or `brand_name` scoping data to one team, geography, or tenant). This is
+exactly *why* the signature matters: if a user could edit their `group_level_id`
+in the browser, they could grant themselves access to other rows. Because it's
+part of the HMAC-signed payload, they can't — any change breaks the signature and
+the session is rejected. (You pass these via the
+[`userAttributes` parameter](https://docs.omni.co/embed/setup/url-parameters/userAttributes);
+for sensitive attributes, use two-step SSO so they never appear in the URL.)
+
 For higher-security flows where you don't want any parameters visible in the URL
 at all, use **two-step SSO**, which exchanges the signed request for a short-lived
 token before loading the iframe.
@@ -66,7 +80,9 @@ token before loading the iframe.
 - [Standard SSO setup →](https://docs.omni.co/embed/setup/standard-sso)
 - [Two-step SSO →](https://docs.omni.co/embed/setup/two-step-sso)
 - [`externalId` & URL parameters →](https://docs.omni.co/embed/setup/url-parameters)
-- [Manage embed secrets →](https://docs.omni.co/embed/setup/standard-sso)
+- [Access filters (RBAC) →](https://docs.omni.co/modeling/topics/parameters/access-filters)
+- [User attributes →](https://docs.omni.co/administration/users/attributes)
+- [Data access control guide →](https://docs.omni.co/modeling/develop/data-access-control)
 
 ### Embed case studies
 
