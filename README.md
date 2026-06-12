@@ -34,16 +34,11 @@ your own.
 - See the full list of [parameters you can pass in the signed URL](https://docs.omni.co/embed/setup/url-parameters).
 - Build **interactive experiences** by [leveraging JavaScript events](https://docs.omni.co/embed/events) (e.g. clicking a value in a dashboard to open a custom modal — this repo does exactly that in the Flights tab).
 
-> **Note on this repo:** because it's hosted on static GitHub Pages (no server),
-> it signs the embed URL **client-side** with the Web Crypto API and **demo-only**
-> credentials. That's the one exception to the "sign server-side" rule above, and
-> it's only safe because these are throwaway trial keys. In production, always
-> sign server-side so your embed secret never reaches the browser.
+
 
 ### Embedding security — why it can't be tampered with
 
-Omni embedding is **secure by default**. The key idea: the **embed secret is used
-to *sign* the URL, not to *identify* the user.**
+Omni embedding is **secure by default**. 
 
 - **Identity** comes from the parameters you put in the signed payload —
   primarily **`externalId`** (your internal user ID), and optionally `name` and
