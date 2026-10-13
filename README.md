@@ -1,4 +1,4 @@
-# Bubble App — SEATAC Airport Analytics Portal
+# Bubble App — Sample Embed Portal Repo
 
 A white-label, **static** embedded-analytics portal (React + Vite) for the
 SEATAC Airport demo brand. It lands on a branded login and, once you sign in,
